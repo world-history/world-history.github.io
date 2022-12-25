@@ -1,12 +1,10 @@
-import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
-import Head from 'next/head'
 import { useState, useEffect } from 'react'
-import * as d3 from "d3"
+import * as three from "three"
 
 const Globe = dynamic(() => import('react-globe.gl'), { ssr: false })
 
-const WorldGlobe = () => {
+const WorldGlobe = ({ width, waterColor, landColor, landSideColor, outlineColor, textColor, normalHeight, hoverHeight }) => {
   const [countries, setCountries] = useState({ features: [] });
   const [hoverCountry, setHoverCountry] = useState();
 
@@ -14,21 +12,28 @@ const WorldGlobe = () => {
     fetch('../../datasets/countries.json').then(res => res.json()).then(setCountries);
   }, [])
 
+  const globeMaterial = new three.MeshPhongMaterial();
+  globeMaterial.color = new three.Color(waterColor);
+
   return (
     <div>
       <Globe
-        globeImageUrl="https://unpkg.com/three-globe/example/img/earth-night.jpg"
-        backgroundImageUrl="https://unpkg.com/three-globe/example/img/night-sky.png"
+        width={width}
+        globeImageUrl=""
+        backgroundColor='#00000000'
         lineHoverPrecision={0}
+        atmosphereAltitude={0.2}
         polygonsData={countries.features}
-        polygonAltitude={country => country === hoverCountry ? 0.1 : 0.02}
-        polygonCapColor={country => 'green'}
-        polygonSideColor={country => 'darkGreen'}
-        polygonStrokeColor={country => '#111'}
+        polygonAltitude={country => country === hoverCountry ? hoverHeight : normalHeight}
+        polygonCapColor={country => landColor}
+        polygonSideColor={country => landSideColor}
+        polygonStrokeColor={country => outlineColor}
+        labelColor={textColor}
         polygonLabel={({ properties: country }) => country.ADMIN}
         onPolygonClick={({ properties: country }) => console.log(country.ADMIN)}
         onPolygonHover={setHoverCountry}
         polygonsTransitionDuration={50}
+        globeMaterial={globeMaterial}
       />
     </div>
   )
