@@ -8,13 +8,13 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "firebaseConfig.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "firebaseConfig.ts", "pages/components/WorldGlobe.js"],
   "exclude": ["node_modules"]
 }
