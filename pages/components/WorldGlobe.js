@@ -15,6 +15,10 @@ const WorldGlobe = ({ width, waterColor, landColor, landSideColor, outlineColor,
   const globeMaterial = new three.MeshPhongMaterial();
   globeMaterial.color = new three.Color(waterColor);
 
+  const hideGlobeLoader = () => {
+    document.getElementById("globeLoader").hidden = true;
+  }
+
   return (
     <div>
       <Globe
@@ -34,6 +38,7 @@ const WorldGlobe = ({ width, waterColor, landColor, landSideColor, outlineColor,
         onPolygonHover={setHoverCountry}
         polygonsTransitionDuration={50}
         globeMaterial={globeMaterial}
+        onGlobeReady={hideGlobeLoader}
       />
     </div>
   )
