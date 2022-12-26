@@ -1,43 +1,14 @@
-import { collection, doc, setDoc, getDocs, getDoc, DocumentData, QuerySnapshot, query, where, FieldPath, WhereFilterOp, DocumentSnapshot } from 'firebase/firestore/lite'
-import { resolve } from 'path';
-import { useState } from 'react';
-import { database } from '../../firebaseConfig'
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
 
-const dataCollection = collection(database, "data");
-
-export const writeData = (id:string, newData:object) => {
-  setDoc(doc(dataCollection, id), newData);
-}
-
-export const readDoc = (id:string) => {
-    return getDoc(doc(dataCollection, id))
-        .then(data => {
-            return data.data();
+export const createUserWithEmail = (email:string, password:string) => {
+    const auth = getAuth();
+    
+    createUserWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
+            // Signed in
+            const user = userCredential.user;
+            console.log(user.email);
         }).catch(error => {
             console.log(error);
         })
-}
-
-export const queryDocs = (path:string, operation:WhereFilterOp, value:any) => {
-    const q = query(dataCollection, where(path, operation, value))
-
-    return getDocs(q)
-        .then(data => {
-            return filterDocs(data);
-        }).catch(error => {
-            console.log(error);
-        })
-}
-
-const filterDocs = (data:QuerySnapshot<DocumentData>) => {
-    let docsArray = [];
-
-    docsArray = data.docs.map(item => {
-        return {
-            id: item.id,
-            ...item.data()
-        }
-    })
-
-    return docsArray
 }

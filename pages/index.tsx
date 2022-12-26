@@ -13,6 +13,7 @@ const Home: NextPage = () => {
       width={600} 
       waterColor="#0377fc" 
       landColor="#00d423" 
+      landHoverColor="#25f748"
       landSideColor="#02b51f" 
       outlineColor="#fff" 
       textColor="#000" 
@@ -31,8 +32,7 @@ const Home: NextPage = () => {
 
       <p id="globeLoader">Loading...</p>
       <i className="fa-solid fa-spinner animate-spin"></i>
-      <div id='globeCanvas' className='z-5 cursor-grab active:cursor-grabbing float-right'>
-      </div>
+      <div id='globeCanvas' className='z-5 cursor-grab active:cursor-grabbing float-right'></div>
     </div>
   )
 }

@@ -4,7 +4,7 @@ import * as three from "three"
 
 const Globe = dynamic(() => import('react-globe.gl'), { ssr: false })
 
-const WorldGlobe = ({ width, waterColor, landColor, landSideColor, outlineColor, textColor, normalHeight, hoverHeight }) => {
+const WorldGlobe = ({ width, waterColor, landColor, landHoverColor, landSideColor, outlineColor, textColor, normalHeight, hoverHeight }) => {
   const [countries, setCountries] = useState({ features: [] });
   const [hoverCountry, setHoverCountry] = useState();
 
@@ -23,13 +23,13 @@ const WorldGlobe = ({ width, waterColor, landColor, landSideColor, outlineColor,
     <div>
       <Globe
         width={width}
-        globeImageUrl=""
+        backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
         backgroundColor='#00000000'
         lineHoverPrecision={0}
         atmosphereAltitude={0.2}
         polygonsData={countries.features}
         polygonAltitude={country => country === hoverCountry ? hoverHeight : normalHeight}
-        polygonCapColor={country => landColor}
+        polygonCapColor={country => country === hoverCountry ? landHoverColor : landColor}
         polygonSideColor={country => landSideColor}
         polygonStrokeColor={country => outlineColor}
         labelColor={textColor}
